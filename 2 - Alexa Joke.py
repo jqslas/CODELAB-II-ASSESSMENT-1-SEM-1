@@ -6,42 +6,48 @@ root = tk.Tk()
 root.title("Alexa Jokes")
 root.geometry("400x260")
 
-# Store current punchline
+font = ("Segoe UI", 10)
+buttonbg = "lightblue"
+
+# Holds the punchline until the user reveals it
 punchline = ""
 
-# Read all non-empty lines from randomJokes.txt
+# Read all the non-empty lines from 2.5 - alexajokes.txt
 with open("2.5 - alexajokes.txt", "r", encoding="utf-8") as f:
     jokes = [line.strip() for line in f if line.strip()]
 
 
-def get_joke():
+def takejokefile():
     global punchline
-    # Pick a random line and split at "?" into setup and punchline
+    # Pick a random line and split it where the ? is
     joke = random.choice(jokes)
+    # Assign the split joke and punchline to a variable
     q, p = joke.split("?", 1)
 
-    # Show setup and hide old punchline
-    setup_lbl.config(text=q + "?")
-    punch_lbl.config(text="")
+    # Show setup with a ? and clears the previous punchline
+    setup1.config(text=q + "?")
+    punch1.config(text="")
+    # Saves the cleaned punchline for when the user reveals it
     punchline = p.strip()
 
 
-def show_punch():
-    # Show the punchline below the setup
-    punch_lbl.config(text=punchline)
+def punchlineshow():
+    # Reveals the saved punchline 
+    punch1.config(text=punchline)
 
 
-# Buttons and labels
-tk.Button(root, text="Alexa tell me a Joke", command=get_joke).pack(pady=10)
+# Button to fetch a new joke when clicked
+tk.Button(root, text="Alexa tell me a Joke", command=takejokefile, bg=buttonbg, font=font).pack(pady=10)
+# Labels for displaying the joke and punchline 
+setup1 = tk.Label(root, text="", wraplength=360, bg=buttonbg, font=font)
+setup1.pack(pady=8)
 
-setup_lbl = tk.Label(root, text="", wraplength=360)
-setup_lbl.pack(pady=8)
-
-punch_lbl = tk.Label(root, text="", wraplength=360)
-punch_lbl.pack(pady=8)
-
-tk.Button(root, text="Show Punchline", command=show_punch).pack(pady=4)
-tk.Button(root, text="Next Joke", command=get_joke).pack(pady=4)
-tk.Button(root, text="Quit", command=root.destroy).pack(pady=4)
-
+punch1 = tk.Label(root, text="", wraplength=360, bg=buttonbg, font=font)
+punch1.pack(pady=8)
+# Action buttons to show the punchline, move to the next joke or to exit the program
+tk.Button(root, text="Show Punchline", command=punchlineshow, bg=buttonbg, font=font).pack(pady=4)
+tk.Button(root, text="Next Joke", command=takejokefile, bg=buttonbg, font=font).pack(pady=4)
+tk.Button(root, text="Quit", command=root.destroy, bg=buttonbg, font=font).pack(pady=4)
+# Launch the program and wait for user to interact
 root.mainloop()
+

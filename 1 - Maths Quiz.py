@@ -25,7 +25,7 @@ def clear():
 
 
 def randomInt(min_num, max_num):
-    # Return a random whole number between min_num and max_num (inclusive)
+    # Return a random whole number between min_num and max_num (the given range)
     return random.randint(min_num, max_num)
 
 
@@ -169,7 +169,7 @@ def start_level(choice):
 def displayMenu():
     clear()
 
-    # Show difficulty menu options
+    # Show difficulty menu options, as well as the main menu text
     tk.Label(root, text="DIFFICULTY LEVEL", font=("Arial", 14)).pack(pady=12)
     tk.Button(root, text="1. Easy", width=18, command=lambda: start_level("Easy")).pack(pady=4)
     tk.Button(root, text="2. Moderate", width=18, command=lambda: start_level("Moderate")).pack(pady=4)
